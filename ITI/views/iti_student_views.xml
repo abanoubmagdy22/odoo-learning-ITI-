@@ -1,0 +1,96 @@
+<odoo>
+    <data>
+        <record id="students_tree_views" model="ir.ui.view">
+            <field name="name">Student Tree View</field>
+            <field name="model">iti.student</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="birth_date"/>
+                    <field name="salary"/>
+                    <field name="tax"/>
+                    <field name="net_salary"/>
+                    <field name="gender"/>
+
+                </tree>
+            </field>
+
+        </record>
+
+
+        <record id="students_form_views" model="ir.ui.view">
+            <field name="name">Student Form View</field>
+            <field name="model">iti.student</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button string="Set first interview" name="change_state"
+                                type="object" attrs="{'invisible':[('state','!=','applied')]}"/>
+                        <button string="Set second interview" states="first" name="change_state" type="object"/>
+                        <button string="Applied" states="second" name="set_passed" type="object"/>
+                        <button string="Rejected" states="second" name="set_rejected" type="object"/>
+                        <button string="Back to applied" name="change_state" states="passed,rejected" type="object"/>
+                        </header>
+
+                    <sheet>
+
+                    <group>
+                    <group string ="Basic Info">
+                        <field name="name"/>
+                        <field name="email"/>
+                        <field name="birth_date"
+                            attrs="{'invisible':[('gender','=','f')]}" />
+                        <field name="salary"/>
+                        <field name="tax"/>
+                        <field name="state"/>
+                        <field name="gender"/>
+                        <field name="accepted"/>
+                        <field name="skills_ids" widget="many2many_tags"/>
+                    </group>
+                    <group string="ITI Info">
+
+                        <field name="level"/>
+                        <field name="login_time"/>
+                        <field name="image" widget="image"/>
+                        <field name="track_id" domain="[('is_open','=',True)]"/>
+                        <field name="track_capacity"/>
+                    </group>
+                    </group>
+                    <notebook>
+                        <page string="Address">
+                            <field name="address"/>
+                        </page>
+                        <page string="CV">
+                            <group>
+                                <field name="cv"/>
+                            </group>
+                         </page>
+                            <page string="Grades">
+                                <field name="grade_ids">
+                                    <tree>
+                                        <field name="course_id"/>
+                                        <field name="grade"/>
+                                    </tree>
+                                </field>
+                            </page>
+                    </notebook>
+                    </sheet>
+                </form>
+            </field>
+
+        </record>
+
+
+
+        <record id="students_actions" model="ir.actions.act_window">
+            <field name="name">Students</field>
+            <field name="res_model">iti.student</field>
+
+        </record>
+
+
+        <menuitem id="iti_root" name="ITI"/>
+        <menuitem id="iti_students_menu" name="students"
+                  parent="iti_root" action="students_actions"/>
+  </data>
+</odoo>

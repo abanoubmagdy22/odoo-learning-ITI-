@@ -1,0 +1,41 @@
+<odoo>
+    <data>
+     <record id="hr_employee_view_inherit" model="ir.ui.view">
+         <field name="name">Hr Employee Inherit</field>
+         <field name="model">hr.employee</field>
+         <field name="inherit_id" ref="hr.view_employee_form"/>
+         <field name="arch" type="xml">
+<!--          <field name="gender" position="after">-->
+<!--              <field name="military_certificate"/>-->
+<!--         </field>-->
+             <field name="gender" position="attributes">
+                 <attribute name="required">True</attribute>
+         </field>
+             <xpath expr="//page[1]" position="inside">
+                 <group>
+                <field name="military_certificate"/>
+                 </group>
+             </xpath>
+
+         </field>
+
+     </record>
+
+        <record id="hr_employee_tree_inherit" model="ir.ui.view">
+            <field name="name">Hr Employee Tree Inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_tree"/>
+            <field name="arch" type="xml">
+<!--                <field name="parent_id" position="after">-->
+<!--                    <field name="gender"/>-->
+<!--                </field>-->
+                <xpath expr="//field[@name='parent_id']" position="after">
+                    <field name="gender"/>
+
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>
